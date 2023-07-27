@@ -6,13 +6,12 @@ import java.util.Random;
 
 public class WeatherService {
 
-    PokemonService pokemonService=new PokemonService();
+    PokemonService pokemonService = new PokemonService();
+
     public WeatherConditionEnum randomWeather() {
-        int pickWeather = new Random().nextInt(WeatherConditionEnum .values().length);
-        WeatherConditionEnum randomWeather=WeatherConditionEnum .values()[pickWeather];
+        int pickWeather = new Random().nextInt(WeatherConditionEnum.values().length);
+        WeatherConditionEnum randomWeather = WeatherConditionEnum.values()[pickWeather];
         return randomWeather;
-
-
     }
 //    public void createWeather(){
 //        WeatherConditionEnum randomWeather = randomWeather();
@@ -30,9 +29,7 @@ public class WeatherService {
 //    }
 
 
-
-
-    }
+}
 
 
 
