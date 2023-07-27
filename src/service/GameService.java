@@ -3,70 +3,62 @@ package service;
 import model.Character;
 import model.Player;
 import model.Pokemon;
+import model.WeatherConditionEnum;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameService {
-Random rand= new Random();
+    WeatherService weatherService = new WeatherService();
+    Random rand = new Random();
+
     public void battle(Player player1, Player player2) {
         int playerTurn = rand.nextInt(1, 3);
         Player attacker;
         Player defender;
+        WeatherConditionEnum weatherCondition;
 
 
-        Player [] playerlist={player1,player2};
+        Player[] playerlist = {player1, player2};
 
-        while(player1.getPokemon().getHealth() != 0 || player2.getPokemon().getHealth() != 0){
-            attacker=playerlist[playerTurn%2];
-            defender =playerlist[(playerTurn+1)%2];
-            playerTurn+=1;
+        while (player1.getPokemon().getHealth() > 0 && player2.getPokemon().getHealth() > 0) {
+            attacker = playerlist[playerTurn % 2];
+            defender = playerlist[(playerTurn + 1) % 2];
+            playerTurn += 1;
+            weatherCondition = weatherService.randomWeather();
 
-            System.out.println("Attacker :" +attacker);
-            System.out.println("Defender: "+defender);
-
+            System.out.println("Attacker: " + attacker.getName() + ", Pokemon: " + attacker.getPokemon().getName() + ", Health: " + attacker.getPokemon().getHealth());
+            System.out.println("Defender: " + defender.getName() + ", Pokemon: " + defender.getPokemon().getName() + ", Health: " + defender.getPokemon().getHealth());
+            System.out.println("Current weather condition is " + weatherCondition.name());
             System.out.println("Attacker choose attack type:\n1- Normal attack?\n2- PokeSpecial attack?\n3- CharSpecial attack?\n4- Both PokeSpecial and CharSpecial attack?");
-            Scanner scanner=new Scanner(System.in);
-            int attackChoice=scanner.nextInt();
-            switch (attackChoice){
+            Scanner scanner = new Scanner(System.in);
+            int attackChoice = scanner.nextInt();
+            switch (attackChoice) {
                 case 1:
-                    attack(attacker,defender,false,false);
+                    attack(attacker, defender, false, false, weatherCondition);
                     break;
                 case 2:
-                    attack(attacker, defender,true,false);
+                    attack(attacker, defender, true, false, weatherCondition);
                     break;
                 case 3:
-                    attack(attacker,defender,false,true);
+                    attack(attacker, defender, false, true, weatherCondition);
                     break;
                 case 4:
-                    attack(attacker,defender,true,true);
+                    attack(attacker, defender, true, true, weatherCondition);
                     break;
 
                 default:
                     System.out.println("Please enter valid attack number");
 
             }
-            healthCheck(defender);
 
-            if(!healthCheck(defender)){
+            if (!healthCheck(defender)) {
                 attacker.setWinner(true);
             }
-
-
-           /* if(attackChoice==1){
-                attack(attacker,defender,false,false);
-                healthCheck(defender);
-            } else if (attackChoice==2) {
-                attack(attacker, defender,true,true);
-            }
-            else{
-                System.out.println("Please enter correct attack type!");
-            }*/
-
         }
     }
-    public void attack(Player attacker, Player defender, boolean isPokeSpecialAttack, boolean isCharSpecialAttack) {
+
+    public void attack(Player attacker, Player defender, boolean isPokeSpecialAttack, boolean isCharSpecialAttack, WeatherConditionEnum weatherCondition) {
         Pokemon attackingPokemon = attacker.getPokemon();
         Pokemon defendingPokemon = defender.getPokemon();
 
@@ -81,6 +73,13 @@ Random rand= new Random();
         }
 
         int charRemainingRights = attacker.getCharacter().getSpecialPower().getRemainingRights();
+        double weaknessRatio = 0.6;
+        int oldDamage = attackingPokemon.getDamage();
+        if (weatherCondition == attackingPokemon.getWeatherWeakness()) {
+            attackingPokemon.setDamage((int) (attackingPokemon.getDamage() * weaknessRatio));
+            System.out.println(attackingPokemon.getName() + "'s base damage decrease from " + oldDamage + " to " + attackingPokemon.getDamage());
+        }
+
 
         int damage = 0;
         if (specialAttack) {
@@ -103,18 +102,36 @@ Random rand= new Random();
             }
         }
         defendingPokemon.setHealth(defendingPokemon.getHealth() - damage);
+
+        attackingPokemon.setDamage(oldDamage);
     }
 
-    public boolean healthCheck(Player player){
-        if(player.getPokemon().getHealth() > 0){
-            System.out.println(player.toString());
+    public boolean healthCheck(Player player) {
+        if (player.getPokemon().getHealth() > 0) {
             System.out.println("Game continues");
             return true;
 
         } else {
-            System.out.println(player.toString());
-            System.out.println(player.getName() + "lost");
+            System.out.println(player.getName() + " lost");
             return false;
         }
+    }
+
+    public void payOff(Player winner, Player loser) {
+        loser.getPokemon().setHealth(loser.getPokemon().getDefaultHealth());
+        winner.setPokemon(loser.getPokemon());
+        winner.getCharacter().getPokemonList().add(winner.getPokemon());
+
+
+        loser.getCharacter().getPokemonList().remove(loser.getPokemon());
+
+        Pokemon lowestDamagePokemon = loser.getCharacter().getPokemonList().get(0);
+        for(Pokemon poke : loser.getCharacter().getPokemonList()){
+            if(poke.getDamage()<lowestDamagePokemon.getDamage() ){
+                lowestDamagePokemon = poke;
+            }
+        }
+        loser.setPokemon(lowestDamagePokemon);
+
     }
 }

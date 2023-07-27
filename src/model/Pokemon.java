@@ -2,17 +2,21 @@ package model;
 
 public class Pokemon {
     private String name;
+    private int defaultHealth;
     private int health;
     private int damage;
     private TypeEnum type;
     private SpecialPower specialPower;
+    private WeatherConditionEnum weatherWeakness;
 
-    public Pokemon(String name, int health, int damage, TypeEnum type, SpecialPower specialPower) {
+    public Pokemon(String name, int health, int damage, TypeEnum type, SpecialPower specialPower, WeatherConditionEnum weatherWeakness) {
         this.name = name;
         this.health = health;
+        this.defaultHealth = health;
         this.damage = damage;
         this.type = type;
         this.specialPower = specialPower;
+        this.weatherWeakness = weatherWeakness;
     }
 
     public String getName() {
@@ -55,6 +59,22 @@ public class Pokemon {
         this.specialPower = specialPower;
     }
 
+    public WeatherConditionEnum getWeatherWeakness() {
+        return weatherWeakness;
+    }
+
+    public void setWeatherWeakness(WeatherConditionEnum weatherWeakness) {
+        this.weatherWeakness = weatherWeakness;
+    }
+
+    public int getDefaultHealth() {
+        return defaultHealth;
+    }
+
+    public void setDefaultHealth(int defaultHealth) {
+        this.defaultHealth = defaultHealth;
+    }
+
     public int specialAttack() {
         if (getSpecialPower().getRemainingRights() > 0) {
             this.specialPower.setRemainingRights(this.specialPower.getRemainingRights() - 1);
@@ -72,6 +92,8 @@ public class Pokemon {
                 ", health=" + health +
                 ", damage=" + damage +
                 ", type=" + type +
+                ", specialPower=" + specialPower +
+                ", weatherWeakness=" + weatherWeakness +
                 '}';
     }
 }
