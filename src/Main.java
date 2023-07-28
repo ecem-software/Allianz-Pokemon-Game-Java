@@ -4,7 +4,6 @@ import service.GameService;
 import service.LoadService;
 import service.PlayerService;
 import service.WeatherService;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
