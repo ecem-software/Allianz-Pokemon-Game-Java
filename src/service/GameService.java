@@ -1,10 +1,7 @@
 package service;
-
-import model.Character;
 import model.Player;
 import model.Pokemon;
 import model.WeatherConditionEnum;
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,6 +9,7 @@ public class GameService {
     WeatherService weatherService = new WeatherService();
     Random rand = new Random();
 
+    // Battle setup method
     public void battle(Player player1, Player player2) {
         int playerTurn = rand.nextInt(1, 3);
         Player attacker;
@@ -102,7 +100,6 @@ public class GameService {
             }
         }
         defendingPokemon.setHealth(defendingPokemon.getHealth() - damage);
-
         attackingPokemon.setDamage(oldDamage);
     }
 
@@ -117,6 +114,7 @@ public class GameService {
         }
     }
 
+    // Game pokemon transfer method
     public void payOff(Player winner, Player loser) {
         loser.getPokemon().setHealth(loser.getPokemon().getDefaultHealth());
         winner.setPokemon(loser.getPokemon());

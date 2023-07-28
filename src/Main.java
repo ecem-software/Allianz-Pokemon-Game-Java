@@ -14,7 +14,6 @@ public class Main {
     public static void main(String[] args) {
 
         WeatherService weatherService = new WeatherService();
-
         Scanner scanner = new Scanner(System.in);
         LoadService loadService = new LoadService();
         PlayerService playerService = new PlayerService();
@@ -47,7 +46,7 @@ public class Main {
         Boolean isGameStart = true;
 
         while (isGameStart) {
-            System.out.println("Please press 1 to start game and please press 2 to quit the gym");
+            System.out.println("Please press 1 to start game and please press 2 to quit the game");
             int gameStartChoice = scanner.nextInt();
             if (gameStartChoice == 1) {
                 System.out.println("First battle is starting");
@@ -58,6 +57,7 @@ public class Main {
                     gameService.payOff(player2, player1);
                 }
                 System.out.println("Second battle is starting! Are you ready! ");
+                System.out.println("Pokemon transfer is done!");
                 gameService.battle(player1, player2);
 
             } else {
