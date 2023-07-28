@@ -18,7 +18,8 @@ public class GameService {
 
 
         Player[] playerlist = {player1, player2};
-
+        System.out.println("player1 remaning right :"+ player1.getPokemon().getSpecialPower().getRemainingRights());
+        System.out.println("player2 remaning right :"+player2.getPokemon().getSpecialPower().getRemainingRights());
         while (player1.getPokemon().getHealth() > 0 && player2.getPokemon().getHealth() > 0) {
             attacker = playerlist[playerTurn % 2];
             defender = playerlist[(playerTurn + 1) % 2];
@@ -71,12 +72,7 @@ public class GameService {
         }
 
         int charRemainingRights = attacker.getCharacter().getSpecialPower().getRemainingRights();
-        double weaknessRatio = 0.6;
-        int oldDamage = attackingPokemon.getDamage();
-        if (weatherCondition == attackingPokemon.getWeatherWeakness()) {
-            attackingPokemon.setDamage((int) (attackingPokemon.getDamage() * weaknessRatio));
-            System.out.println("Weather" + weatherCondition + ":" +attackingPokemon.getName() + "'s base damage decrease from " + oldDamage + " to " + attackingPokemon.getDamage());
-        }
+
 
 
         int damage = 0;
@@ -100,6 +96,12 @@ public class GameService {
             }
         }
         defendingPokemon.setHealth(defendingPokemon.getHealth() - damage);
+        double weaknessRatio = 0.6;
+        int oldDamage = damage;
+        if (weatherCondition == attackingPokemon.getWeatherWeakness()) {
+            damage=(int) (damage*weaknessRatio);
+            System.out.println("Due To Weather" + weatherCondition + ":" +attackingPokemon.getName() + "'s damage decrease from " + oldDamage + " to " + damage);
+        }
         System.out.println(attacker.getName() + "'s Pokemon deals " + damage + " damage to " + defender.getName() + "'s Pokemon.");
         attackingPokemon.setDamage(oldDamage);
     }

@@ -34,8 +34,7 @@ public class Main {
         }
         // Load Pokemon
         ArrayList<Pokemon> pokemonList2 = loadService.loadPokemons();
-        for (Pokemon pokemon : pokemonList) {
-        }
+        
 
         //Add Pokémon to Characters
         characterList.get(0).getPokemonList().addAll(pokemonList);
