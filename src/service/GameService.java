@@ -75,7 +75,7 @@ public class GameService {
         int oldDamage = attackingPokemon.getDamage();
         if (weatherCondition == attackingPokemon.getWeatherWeakness()) {
             attackingPokemon.setDamage((int) (attackingPokemon.getDamage() * weaknessRatio));
-            System.out.println(attackingPokemon.getName() + "'s base damage decrease from " + oldDamage + " to " + attackingPokemon.getDamage());
+            System.out.println("Weather" + weatherCondition + ":" +attackingPokemon.getName() + "'s base damage decrease from " + oldDamage + " to " + attackingPokemon.getDamage());
         }
 
 
@@ -100,6 +100,7 @@ public class GameService {
             }
         }
         defendingPokemon.setHealth(defendingPokemon.getHealth() - damage);
+        System.out.println(attacker.getName() + "'s Pokemon deals " + damage + " damage to " + defender.getName() + "'s Pokemon.");
         attackingPokemon.setDamage(oldDamage);
     }
 

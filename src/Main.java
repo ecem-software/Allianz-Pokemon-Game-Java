@@ -32,16 +32,20 @@ public class Main {
         for (Pokemon pokemon : pokemonList) {
             System.out.println(pokemon.toString());
         }
+        // Load Pokemon
+        ArrayList<Pokemon> pokemonList2 = loadService.loadPokemons();
+        for (Pokemon pokemon : pokemonList) {
+        }
 
         //Add Pokémon to Characters
         characterList.get(0).getPokemonList().addAll(pokemonList);
-        characterList.get(1).getPokemonList().addAll(pokemonList);
+        characterList.get(1).getPokemonList().addAll(pokemonList2);
 
-
+        //Create players
         Player player1 = loadService.preparePlayer(characterList);
         Player player2 = loadService.preparePlayer(characterList);
 
-        //Game is starting
+        //Game is started
 
         Boolean isGameStart = true;
 
