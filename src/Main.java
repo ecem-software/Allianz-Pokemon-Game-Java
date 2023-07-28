@@ -4,12 +4,12 @@ import service.GameService;
 import service.LoadService;
 import service.PlayerService;
 import service.WeatherService;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+
 public class Main {
     public static void main(String[] args) {
 
@@ -42,10 +42,10 @@ public class Main {
         Player player1 = loadService.preparePlayer(characterList);
         Player player2 = loadService.preparePlayer(characterList);
 
+        //Game is starting
 
         Boolean isGameStart = true;
 
-        //Game is starting
         while (isGameStart) {
             System.out.println("Please press 1 to start game and please press 2 to quit the gym");
             int gameStartChoice = scanner.nextInt();

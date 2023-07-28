@@ -55,7 +55,10 @@ public class LoadService {
         //Choose character of players
         System.out.println( playerName+ " Choose your character");
         int playerCharChoice=scanner.nextInt();
-
+        while (playerCharChoice < 1 || playerCharChoice > characterList.size()) {
+            System.out.println("Invalid choice! Please select a valid character (1 to " + characterList.size() + "):");
+            playerCharChoice = scanner.nextInt();
+        }
         //Create Character
         Player player = playerService.createPlayer(playerName, characterList.get(playerCharChoice-1));
 
