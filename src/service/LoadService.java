@@ -26,10 +26,10 @@ public class LoadService {
         SpecialPower fire = new Fire("Fire", 5, 3);
         SpecialPower earth = new Earth("Earth", 4, 3);
 
-        Pokemon pokemon1 = new Pikachu("Pikachu", 100, 10, TypeEnum.ELECTRICY, electricty);
-        Pokemon pokemon2 = new Sqiurtle("Squirtle", 15, 8, TypeEnum.WATER, water);
-        Pokemon pokemon3 = new Charmander("Charmender", 90, 12, TypeEnum.FIRE, fire);
-        Pokemon pokemon4 = new Balbausar("Balbausar", 140, 7, TypeEnum.EARTH, earth);
+        Pokemon pokemon1 = new Pikachu("Pikachu", 100, 10, TypeEnum.ELECTRICY, electricty,WeatherConditionEnum.SUNNY);
+        Pokemon pokemon2 = new Sqiurtle("Squirtle", 110, 8, TypeEnum.WATER, water,WeatherConditionEnum.RAINY);
+        Pokemon pokemon3 = new Charmander("Charmender", 90, 12, TypeEnum.FIRE, fire,WeatherConditionEnum.CLOUDY);
+        Pokemon pokemon4 = new Balbausar("Balbausar", 140, 7, TypeEnum.EARTH, earth,WeatherConditionEnum.SNOWY);
 
         ArrayList<Pokemon> pokemonList = new ArrayList<>();
         pokemonList.add(pokemon1);
@@ -62,6 +62,7 @@ public class LoadService {
         //Remove chosen character from the list.
         characterList.remove(playerCharChoice-1);
 
+
         //Choose Pokemon
         System.out.println("Please choose your pokemons");
 
@@ -78,7 +79,7 @@ public class LoadService {
         return player;
     }
 
-    WeatherService weatherService=new WeatherService();
+    /*WeatherService weatherService=new WeatherService();
     public void ChangeDamageAmountAccordingToWeather(Pokemon playerPoke){
         WeatherConditionEnum randomWeather = weatherService.randomWeather();
 
@@ -97,7 +98,7 @@ public class LoadService {
             playerPoke.setDamage(playerPoke.getDamage()-2);
 
         }
-    }
+    }*/
 
 
 }

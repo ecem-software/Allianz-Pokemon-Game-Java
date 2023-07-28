@@ -14,9 +14,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        WeatherService weatherService=new WeatherService();
+        WeatherService weatherService = new WeatherService();
 
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         LoadService loadService = new LoadService();
         PlayerService playerService = new PlayerService();
         GameService gameService = new GameService();
@@ -39,79 +39,33 @@ public class Main {
         characterList.get(0).getPokemonList().addAll(pokemonList);
         characterList.get(1).getPokemonList().addAll(pokemonList);
 
-       // characterList.get(0).getPokemonList().add(pokemonList.get(0));
-        //characterList.get(1).getPokemonList().add(pokemonList.get(1));
-        /* Player player1 = playerService.createPlayer("Tuğçe", characterList.get(0));
-        Player player2 = playerService.createPlayer("Hasan", characterList.get(1));
 
-        gameService.attack(player1, player2, true, true);
-
-        gameService.healthCheck(player2);*/
-
-//        //Take name of players
-//        System.out.println("First player: Please enter your name!");
-//        String player1Name=scanner.next();
-//        System.out.println("Second player: Please enter your name!");
-//        String player2Name=scanner.next();
-//
-//        int index=1;
-//        for(Character character: characterList){
-//            System.out.println(index+"- " + character.getName());
-//            index++;
-//        }
-//
-//        //Choose character of players
-//        System.out.println( player1Name+ " Choose your character");
-//        int player1CharChoice=scanner.nextInt();
-//        System.out.println(player2Name + " Choose your character");
-//        int player2CharChoice=scanner.nextInt();
-//
-//
-//        Player player1 = playerService.createPlayer(player1Name, characterList.get(player1CharChoice-1));
-//        Player player2 = playerService.createPlayer(player2Name, characterList.get(player2CharChoice-1));
-//
-//        System.out.println("Please choose your pokemons");
-//
-//
-//        int index2=1;
-//        for(Pokemon poke: player1.getCharacter().getPokemonList()){
-//            System.out.println(index2+"- " + player1.getCharacter().getPokemonList().get(index2-1));
-//            index2++;
-//        }
-//
-//        int player1PokeChoice=scanner.nextInt();
-//        Pokemon player1Poke=player1.getCharacter().getPokemonList().get(player1PokeChoice-1);
+        Player player1 = loadService.preparePlayer(characterList);
+        Player player2 = loadService.preparePlayer(characterList);
 
 
-        Player player1=loadService.preparePlayer(characterList);
-        Player player2=loadService.preparePlayer(characterList);
+        Boolean isGameStart = true;
 
-
-        System.out.println("Please press 1 to start game and please press 2 to quit the gym");
-        int gameStartChoice=scanner.nextInt();
-        Boolean isGameStart=true;
         //Game is starting
-        while (isGameStart){
-            if(gameStartChoice==1){
-                //initial weather setted.
+        while (isGameStart) {
+            System.out.println("Please press 1 to start game and please press 2 to quit the gym");
+            int gameStartChoice = scanner.nextInt();
+            if (gameStartChoice == 1) {
+                System.out.println("First battle is starting");
+                gameService.battle(player1, player2);
+                if (player1.isWinner() == true) {
+                    gameService.payOff(player1, player2);
+                } else if (player2.isWinner() == true) {
+                    gameService.payOff(player2, player1);
+                }
+                System.out.println("Second battle is starting! Are you ready! ");
+                gameService.battle(player1, player2);
 
-                WeatherConditionEnum currentWeather = weatherService.randomWeather();
-                System.out.println("Now the weather is " + currentWeather);
-                loadService. ChangeDamageAmountAccordingToWeather(player1, currentWeather);
-                loadService. ChangeDamageAmountAccordingToWeather(player2, currentWeather);
-
-                gameService.battle(player1,player2);
-
-            }
-
-            else{
+            } else {
                 System.out.println("Quiting....");
                 break;
             }
         }
-        WeatherService weatherService=new WeatherService();
-        System.out.println(weatherService);
-
 
 
     }
